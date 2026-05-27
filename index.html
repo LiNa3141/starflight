@@ -114,10 +114,6 @@
   .pay-total-label { font-size: 12px; color: var(--text-muted); }
   .pay-total-value { font-family: 'Noto Serif TC', serif; font-size: 22px; color: var(--purple-deeper); }
 
-  /* Five digits */
-  .digits-hint { font-size: 12px; color: var(--text-muted); line-height: 1.7; margin-bottom: 10px; }
-  .digits-input { text-align: center; letter-spacing: 0.2em; font-size: 18px; font-weight: 500; }
-
   /* Submit */
   .submit-btn { width: 100%; padding: 16px; background: var(--purple-dark); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: background 0.2s; letter-spacing: 0.1em; margin-top: 0.5rem; }
   .submit-btn:hover { background: var(--purple-deeper); }
@@ -167,7 +163,7 @@
     </div>
     <div class="title-en">Soul Scent · Interstellar Flight</div>
     <div class="title-zh">星際航班</div>
-    <div class="tagline">用符印開啟阿卡西場域<br>讓你走進去，看見自己</div>
+    <div class="tagline">穿過集體的門，走向個人的房間<br>在阿卡西的星際航道裡，看見最真實的自己</div>
   </div>
  
   <div class="info-strip">
@@ -249,169 +245,12 @@
     </div>
   </div>
  
-<div class="section">
-  <div class="section-label">付款方式</div>
-  <div class="digits-hint">點擊下方按鈕後，系統將為你保留名單，並引導至綠界安全金流頁面進行刷卡或轉帳。</div>
-</div>
-
+  <div class="section">
+    <div class="section-label">付款方式</div>
+    <div class="digits-hint">點擊下方按鈕後，系統將為你保留名單，並引導至綠界安全金流頁面進行刷卡或轉帳。</div>
+  </div>
  
   <button class="submit-btn" id="submit-btn" onclick="submitForm()">確認報名 →</button>
 </div>
  
 <div class="page success-page" id="success-page">
-  <div class="success-header">
-    <div class="success-glyph">✦</div>
-    <div class="success-title">你已被召喚</div>
-    <div class="badge">待確認匯款中</div>
-    <div class="success-sub" id="success-name-msg"></div>
-  </div>
- 
-  <div class="success-oil-box">
-    <div class="success-oil-label">你的精油</div>
-    <div class="success-oil-name" id="success-oil"></div>
-  </div>
- 
-  <div class="success-pay-box">
-    <div class="success-pay-title">匯款確認資訊</div>
-    <div class="success-pay-row"><span>銀行</span><span>700 中華郵政</span></div>
-    <div class="success-pay-row"><span>帳號</span><span>004157007152886</span></div>
-    <div class="success-pay-row"><span>金額</span><span id="s-amount"></span></div>
-    <div class="success-pay-row"><span>你的後五碼</span><span id="s-digits" style="letter-spacing:0.15em"></span></div>
-  </div>
- 
-  <div class="closing">
-    報名資訊已收到<br>
-    確認匯款後將發送通知<br><br>
-    <em>6月14日，帶著你的靈魂來</em>
-  </div>
-</div>
- 
-<script>
-// 🌟 核心設定：請確認這裡填入的是你步驟二取得的 Google Apps Script 網頁部署 URL 網址 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxDY53fij3UhNq750w15iy7rsYJoTxb2adYwxoOwCRe4KjK7eZ-ceIKAvQNTLcBBhxJzA/exec";
- 
-const oils = [
-  { icon: "💜", name: "真正薰衣草", meaning: "最溫柔的頻率校準師。幫助神經系統從日常的緊繃鬆開，讓意識自然沉入阿卡西場域的入口。你被召喚來放下，而不是抓緊。" },
-  { icon: "🌿", name: "綠花白千層", meaning: "清透的空間清理者。在進入場域之前，先為你的內在騰出空間，移除佔據感知的雜訊，讓靈魂的訊號變得清晰。" },
-  { icon: "🌱", name: "綠薄荷", meaning: "清醒而輕盈的見證者能量。幫助你在深入阿卡西場域的同時保持意識清明，看見而不迷失，感受而不淹沒。" },
-  { icon: "🌰", name: "肉豆蔻", meaning: "夢境與現實之間的橋樑。連結潛意識深層的靈魂記憶，帶出那些一直都知道、卻從未說出口的真相。" },
-  { icon: "🍊", name: "甜橙", meaning: "純真與喜悅的頻率。提醒靈魂在看見自己的過程中，不需要沉重。你本來的樣子，是值得被喜悅接納的。" },
-  { icon: "🌲", name: "大西洋雪松", meaning: "古老森林的穩定力量。當你進入高頻場域，雪松讓你的根不消失。飛得越高，根就扎得越深。" },
-  { icon: "🌸", name: "玫瑰天竺葵", meaning: "心輪的柔性開啟者。幫助你放下對「看見自己」的防衛，以溫柔而非評判的眼光，接觸靈魂最脆弱也最真實的部分。" },
-  { icon: "🌾", name: "岩蘭草", meaning: "大地最深處的頻率。強力錨定你在揚升時不失去身體的感知，是最誠實的接地石，讓靈性體驗真正落入骨骼與血液。" }
-];
- 
-const ritualTexts = [
-  "正在連結阿卡西場域...",
-  "讀取專屬頻率座標...",
-  "開啟集體意識通道...",
-  "植物精靈回應中...",
-  "正在調頻靈魂頻率..."
-];
- 
-let selectedTicket = 'solo';
-let drawnOil = null;
-let finalPrice = 2888;
- 
-function selectTicket(type) {
-  selectedTicket = type;
-  document.getElementById('solo-card').classList.toggle('selected', type === 'solo');
-  document.getElementById('duo-card').classList.toggle('selected', type === 'duo');
-  const comp = document.getElementById('companion-section');
-  comp.classList.toggle('show', type === 'duo');
-  document.getElementById('total-display').textContent = type === 'solo' ? '2,888 元' : '5,332 元（兩人）';
-  finalPrice = type === 'solo' ? 2888 : 5332;
-}
- 
-function copyAccount(event) {
-  navigator.clipboard.writeText('004157007152886').then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '已複製 ✓';
-    setTimeout(() => btn.textContent = orig, 1500);
-  });
-}
- 
-function drawOil() {
-  const btn = document.getElementById('draw-btn');
-  btn.disabled = true;
-  btn.textContent = '抽取中...';
-  let count = 0;
-  const interval = setInterval(() => {
-    const temp = oils[Math.floor(Math.random() * oils.length)];
-    const tempText = ritualTexts[Math.floor(Math.random() * ritualTexts.length)];
-    document.getElementById('oil-icon').textContent = "🔮";
-    document.getElementById('oil-name').textContent = temp.name;
-    document.getElementById('oil-meaning').textContent = tempText;
-    document.getElementById('oil-result').classList.add('show');
-    count++;
-    if (count >= 14) {
-      clearInterval(interval);
-      drawnOil = oils[Math.floor(Math.random() * oils.length)];
-      document.getElementById('oil-icon').textContent = drawnOil.icon;
-      document.getElementById('oil-name').textContent = drawnOil.name;
-      document.getElementById('oil-meaning').textContent = drawnOil.meaning;
-      btn.textContent = '✓ 精油已確認';
-    }
-  }, 120);
-}
- 
-function submitForm() {
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const companionName = document.getElementById('companion-name').value.trim();
-  const companionPhone = document.getElementById('companion-phone').value.trim();
-  const submitBtn = document.getElementById('submit-btn');
- 
-  // 1. 欄位驗證防呆
-  if (!name || !phone || !email) { alert('請填寫姓名、手機和 Email'); return; }
-  if (selectedTicket === 'duo' && (!companionName || !companionPhone)) { alert('請完整填寫同行者資訊'); return; }
-  if (!drawnOil) { alert('請先完成精油盲抽'); return; }
- 
-  // 2. 鎖定按鈕
-  submitBtn.disabled = true;
-  submitBtn.textContent = '正在為您連結綠界安全金流...';
- 
-  // 3. 打包資料 (原本傳 lastFive 的欄位，改傳初始狀態)
-  const formData = {
-    name: name,
-    phone: phone,
-    email: email,
-    plan: selectedTicket === 'solo' ? '單人探索艙' : '雙人共振艙',
-    companionName: selectedTicket === 'duo' ? companionName : '',
-    companionPhone: selectedTicket === 'duo' ? companionPhone : '',
-    amount: finalPrice,
-    oil: drawnOil.name,
-    lastFive: "前往綠界付款中" 
-  };
- 
-  // 4. 先將報名與盲抽結果存入 Google 試算表
-  fetch(GAS_URL, {
-    method: "POST",
-    mode: "cors",
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify(formData)
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.result === "success") {
-      
-      // 
-      if (selectedTicket === 'solo') { window.location.href = "https://cart.cashier.ecpay.com.tw/qp/2fu9";
-      } else { window.location.href = "https://cart.cashier.ecpay.com.tw/qp/2fv7";
-      }
-
-    } else {
-      alert("發送失敗：" + data.error);
-      submitBtn.disabled = false;
-      submitBtn.textContent = '確認報名 →';
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("連線發生異常，請檢查網路。");
-    submitBtn.disabled = false;
-    submitBtn.textContent = '確認報名 →';
-  });
-}
