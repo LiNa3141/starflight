@@ -110,4 +110,283 @@
   .pay-value { font-size: 13px; font-weight: 500; color: var(--text); letter-spacing: 0.03em; }
   .copy-btn { font-size: 11px; color: var(--purple-dark); border: 0.5px solid var(--purple-mid); background: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: all 0.15s; }
   .copy-btn:hover { background: var(--purple-light); }
-  .pay-total-row { border-top: 0.5px solid
+  .pay-total-row { border-top: 0.5px solid var(--border); padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; align-items: baseline; }
+  .pay-total-label { font-size: 12px; color: var(--text-muted); }
+  .pay-total-value { font-family: 'Noto Serif TC', serif; font-size: 22px; color: var(--purple-deeper); }
+
+  /* Five digits */
+  .digits-hint { font-size: 12px; color: var(--text-muted); line-height: 1.7; margin-bottom: 10px; }
+  .digits-input { text-align: center; letter-spacing: 0.2em; font-size: 18px; font-weight: 500; }
+
+  /* Submit */
+  .submit-btn { width: 100%; padding: 16px; background: var(--purple-dark); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: background 0.2s; letter-spacing: 0.1em; margin-top: 0.5rem; }
+  .submit-btn:hover { background: var(--purple-deeper); }
+  .submit-btn:active { transform: scale(0.98); }
+
+  /* Success */
+  .success-page { display: none; }
+  .success-page.show { display: block; }
+  .success-header { text-align: center; padding: 3rem 0 2rem; }
+  .success-glyph { font-family: 'Noto Serif TC', serif; font-size: 48px; color: var(--purple); margin-bottom: 1.5rem; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .success-title { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 300; color: var(--text); letter-spacing: 0.15em; margin-bottom: 8px; }
+  .success-sub { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+  .badge { display: inline-block; background: #FAEEDA; color: #854F0B; font-size: 11px; padding: 4px 12px; border-radius: 20px; margin: 1rem 0; letter-spacing: 0.05em; }
+  .success-oil-box { background: var(--purple-light); border-radius: 12px; padding: 1.25rem; text-align: center; margin: 1.5rem 0; }
+  .success-oil-label { font-size: 11px; color: var(--purple); letter-spacing: 0.15em; margin-bottom: 6px; }
+  .success-oil-name { font-family: 'Noto Serif TC', serif; font-size: 20px; color: var(--purple-deeper); }
+  .success-pay-box { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; }
+  .success-pay-title { font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; margin-bottom: 12px; }
+  .success-pay-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+  .success-pay-row span:first-child { color: var(--text-muted); }
+  .success-pay-row span:last-child { font-weight: 500; }
+  .closing { font-size: 13px; color: var(--text-muted); line-height: 1.9; text-align: center; }
+  .closing em { color: var(--purple); font-style: normal; }
+</style>
+</head>
+<body>
+
+<div class="page" id="form-page">
+
+  <div class="header">
+    <div class="sigil-wrap">
+      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="34" stroke="#AFA9EC" stroke-width="0.5"/>
+        <circle cx="36" cy="36" r="24" stroke="#AFA9EC" stroke-width="0.5" stroke-dasharray="3 3"/>
+        <circle cx="36" cy="36" r="3.5" fill="#534AB7" opacity="0.9"/>
+        <line x1="36" y1="2" x2="36" y2="70" stroke="#7F77DD" stroke-width="0.5"/>
+        <line x1="2" y1="36" x2="70" y2="36" stroke="#7F77DD" stroke-width="0.5"/>
+        <line x1="12" y1="12" x2="60" y2="60" stroke="#AFA9EC" stroke-width="0.5"/>
+        <line x1="60" y1="12" x2="12" y2="60" stroke="#AFA9EC" stroke-width="0.5"/>
+        <polygon points="36,4 39,11 33,11" fill="#534AB7" opacity="0.7"/>
+        <polygon points="36,68 39,61 33,61" fill="#534AB7" opacity="0.7"/>
+        <polygon points="4,36 11,33 11,39" fill="#534AB7" opacity="0.7"/>
+        <polygon points="68,36 61,33 61,39" fill="#534AB7" opacity="0.7"/>
+      </svg>
+    </div>
+    <div class="title-en">Soul Scent · Interstellar Flight</div>
+    <div class="title-zh">星際航班</div>
+    <div class="tagline">用符印開啟阿卡西場域<br>讓你走進去，看見自己</div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-item"><span class="info-dot"></span>2026年6月14日</div>
+    <div class="info-item"><span class="info-dot"></span>台南身心靈共享空間</div>
+    <div class="info-item"><span class="info-dot"></span>限額4–6人</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">選擇票種</div>
+    <div class="ticket-grid">
+      <div class="ticket selected" id="solo-card" onclick="selectTicket('solo')">
+        <div class="ticket-type">單人</div>
+        <div class="ticket-price">2,888</div>
+        <div class="ticket-unit">元／人</div>
+      </div>
+      <div class="ticket" id="duo-card" onclick="selectTicket('duo')">
+        <div class="ticket-type">兩人同行</div>
+        <div class="ticket-price">2,666</div>
+        <div class="ticket-unit">元／人</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">你的資訊</div>
+    <div class="field"><input type="text" id="name" placeholder="姓名"></div>
+    <div class="field"><input type="tel" id="phone" placeholder="手機號碼"></div>
+    <div class="field"><input type="email" id="email" placeholder="Email"></div>
+  </div>
+
+  <div class="companion" id="companion-section">
+    <div class="companion-inner">
+      <div class="companion-label">同行者資訊</div>
+      <div class="field"><input type="text" id="companion-name" placeholder="同行者姓名"></div>
+      <div class="field"><input type="tel" id="companion-phone" placeholder="同行者手機"></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="oil-box">
+      <div class="oil-header">
+        <div class="oil-dot"></div>
+        <div class="oil-box-title">精油盲抽</div>
+      </div>
+      <div class="oil-desc">不是你選它，是它選你。抽到的精油將在課堂上幫助你調頻，進入阿卡西場域。</div>
+      <button class="draw-btn" id="draw-btn" onclick="drawOil()">✦ 開始盲抽</button>
+      <div class="oil-result" id="oil-result">
+        <div class="oil-card">
+          <div class="oil-emoji" id="oil-icon"></div>
+          <div class="oil-name" id="oil-name"></div>
+          <div class="oil-meaning" id="oil-meaning"></div>
+          <div class="oil-footnote">這支精油將在課堂上等待你</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="payment-box">
+      <div class="payment-row">
+        <span class="pay-label">票種</span>
+        <span class="pay-value" id="ticket-label-display">單人探索艙</span>
+      </div>
+      <div class="pay-total-row">
+        <span class="pay-total-label">費用</span>
+        <span class="pay-total-value" id="total-display">2,888 元</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitForm()">確認報名，前往付款 →</button>
+</div>
+
+<div class="page success-page" id="success-page">
+  <div class="success-header">
+    <div class="success-glyph">✦</div>
+    <div class="success-title">你已被召喚</div>
+    <div class="badge">待確認匯款中</div>
+    <div class="success-sub" id="success-name-msg"></div>
+  </div>
+
+  <div class="success-oil-box">
+    <div class="success-oil-label">你的精油</div>
+    <div class="success-oil-name" id="success-oil"></div>
+  </div>
+
+  <div class="success-pay-box">
+    <div class="success-pay-title">匯款確認資訊</div>
+    <div class="success-pay-row"><span>銀行</span><span>700 中華郵政</span></div>
+    <div class="success-pay-row"><span>帳號</span><span>004157007152886</span></div>
+    <div class="success-pay-row"><span>金額</span><span id="s-amount"></span></div>
+    <div class="success-pay-row"><span>你的後五碼</span><span id="s-digits" style="letter-spacing:0.15em"></span></div>
+  </div>
+
+  <div class="closing">
+    報名資訊已收到<br>
+    確認匯款後將發送通知<br><br>
+    <em>6月14日，帶著你的靈魂來</em>
+  </div>
+</div>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzv0CrpkQtzhVQvJ1vUGuU4yua4Ydj-rExj5f8mlIxKUI_i47AyWQr-OJNgq7P0aUIQtg/exec";
+const ECPAY_SOLO = "https://cart.cashier.ecpay.com.tw/qp/2fu9";
+const ECPAY_DUO  = "https://cart.cashier.ecpay.com.tw/qp/2fv7";
+
+const oils = [
+  { icon: "💜", name: "真正薰衣草", meaning: "最溫柔的頻率校準師。幫助神經系統從日常的緊繃鬆開，讓意識自然沉入阿卡西場域的入口。你被召喚來放下，而不是抓緊。" },
+  { icon: "🌿", name: "綠花白千層", meaning: "清透的空間清理者。在進入場域之前，先為你的內在騰出空間，移除佔據感知的雜訊，讓靈魂的訊號變得清晰。" },
+  { icon: "🌱", name: "綠薄荷", meaning: "清醒而輕盈的見證者能量。幫助你在深入阿卡西場域的同時保持意識清明，看見而不迷失，感受而不淹沒。" },
+  { icon: "🌰", name: "肉豆蔻", meaning: "夢境與現實之間的橋樑。連結潛意識深層的靈魂記憶，帶出那些一直都知道、卻從未說出口的真相。" },
+  { icon: "🍊", name: "甜橙", meaning: "純真與喜悅的頻率。提醒靈魂在看見自己的過程中，不需要沉重。你本來的樣子，是值得被喜悅接納的。" },
+  { icon: "🌲", name: "大西洋雪松", meaning: "古老森林的穩定力量。當你進入高頻場域，雪松讓你的根不消失。飛得越高，根就扎得越深。" },
+  { icon: "🌸", name: "玫瑰天竺葵", meaning: "心輪的柔性開啟者。幫助你放下對「看見自己」的防衛，以溫柔而非評判的眼光，接觸靈魂最脆弱也最真實的部分。" },
+  { icon: "🌾", name: "岩蘭草", meaning: "大地最深處的頻率。強力錨定你在揚升時不失去身體的感知，是最誠實的接地石，讓靈性體驗真正落入骨骼與血液。" }
+];
+
+let selectedTicket = 'solo';
+let drawnOil = null;
+
+function selectTicket(type) {
+  selectedTicket = type;
+  document.getElementById('solo-card').classList.toggle('selected', type === 'solo');
+  document.getElementById('duo-card').classList.toggle('selected', type === 'duo');
+  const comp = document.getElementById('companion-section');
+  comp.classList.toggle('show', type === 'duo');
+  document.getElementById('total-display').textContent = type === 'solo' ? '2,888 元' : '5,332 元（兩人）';
+  const labelEl = document.getElementById('ticket-label-display');
+  if (labelEl) labelEl.textContent = type === 'solo' ? '單人探索艙' : '雙人共振艙';
+}
+
+function copyAccount() {
+  navigator.clipboard.writeText('004157007152886').then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '已複製 ✓';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+function drawOil() {
+  const btn = document.getElementById('draw-btn');
+  btn.disabled = true;
+  btn.textContent = '抽取中...';
+  let count = 0;
+  const interval = setInterval(() => {
+    const temp = oils[Math.floor(Math.random() * oils.length)];
+    document.getElementById('oil-icon').textContent = temp.icon;
+    document.getElementById('oil-name').textContent = temp.name;
+    document.getElementById('oil-meaning').textContent = temp.meaning;
+    document.getElementById('oil-result').classList.add('show');
+    count++;
+    if (count >= 14) {
+      clearInterval(interval);
+      drawnOil = oils[Math.floor(Math.random() * oils.length)];
+      document.getElementById('oil-icon').textContent = drawnOil.icon;
+      document.getElementById('oil-name').textContent = drawnOil.name;
+      document.getElementById('oil-meaning').textContent = drawnOil.meaning;
+      btn.textContent = '✓ 精油已確認';
+    }
+  }, 110);
+}
+
+function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const companionName = document.getElementById('companion-name') ? document.getElementById('companion-name').value.trim() : '';
+  const companionPhone = document.getElementById('companion-phone') ? document.getElementById('companion-phone').value.trim() : '';
+  const btn = document.getElementById('submit-btn');
+
+  if (!name || !phone || !email) { alert('請填寫姓名、手機和Email'); return; }
+  if (selectedTicket === 'duo' && (!companionName || !companionPhone)) { alert('請填寫同行者資訊'); return; }
+  if (!drawnOil) { alert('請先完成精油盲抽'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '正在連線星際航道...';
+
+  const formData = {
+    name: name,
+    phone: phone,
+    email: email,
+    plan: selectedTicket === 'solo' ? '單人探索艙' : '雙人共振艙',
+    companionName: companionName,
+    companionPhone: companionPhone,
+    amount: selectedTicket === 'solo' ? 2888 : 5332,
+    oil: drawnOil.name,
+    lastFive: ''
+  };
+
+  fetch(GAS_URL, {
+    method: "POST",
+    mode: "cors",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(formData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.result === "success") {
+      // 跳轉綠界付款
+      const ecpayUrl = selectedTicket === 'solo' ? ECPAY_SOLO : ECPAY_DUO;
+      window.location.href = ecpayUrl;
+    } else {
+      alert("發送失敗，請稍後再試。");
+      btn.disabled = false;
+      btn.textContent = '確認報名，前往付款 →';
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    // 即使GAS失敗，仍跳轉付款（避免卡住使用者）
+    const ecpayUrl = selectedTicket === 'solo' ? ECPAY_SOLO : ECPAY_DUO;
+    window.location.href = ecpayUrl;
+  });
+}
+</script>
+</body>
+</html>
