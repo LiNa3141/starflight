@@ -397,12 +397,12 @@ function submitForm() {
   .then(data => {
     if (data.result === "success") {
       
-      // 5. ⭐ 關鍵：資料存入成功後，依據方案自動跳轉到步驟一建立的綠界金流連結
+      // 
       if (selectedTicket === 'solo') {
-        // 🔴 請把下方換成你的【單人 $2888】綠界收款連結
+        // 
         window.location.href = "https://cart.cashier.ecpay.com.tw/qp/2fu9";
       } else {
-        // 🔴 請把下方換成你的【雙人 $5332】綠界收款連結
+        // 
         window.location.href = "https://cart.cashier.ecpay.com.tw/qp/2fv7";
       }
 
