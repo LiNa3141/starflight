@@ -41,7 +41,8 @@
   @keyframes sigil-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   .title-en { font-family: 'Noto Serif TC', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--purple); text-transform: uppercase; margin-bottom: 8px; }
   .title-zh { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 300; color: var(--text); letter-spacing: 0.15em; margin-bottom: 10px; }
-  .tagline { font-size: 12px; color: var(--text-muted); line-height: 1.8; letter-spacing: 0.05em; }
+  .tagline { font-size: 12px; color: var(--text-muted); line-height: 2; letter-spacing: 0.05em; }
+  .tagline br + br + * { margin-top: 0.5rem; }
 
   /* Info strip */
   .info-strip { display: flex; flex-direction: column; gap: 6px; background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
@@ -164,15 +165,24 @@
         <polygon points="68,36 61,33 61,39" fill="#534AB7" opacity="0.7"/>
       </svg>
     </div>
-    <div class="title-en">Soul Scent · Interstellar Flight</div>
+    <div class="title-en">香氛癒靈魂導航基地 · Soul Scent</div>
     <div class="title-zh">星際航班</div>
-    <div class="tagline">用符印開啟阿卡西場域<br>讓你走進去，看見自己</div>
+    <div class="tagline">符印開門，走進去的是你自己<br>進入你的阿卡西場域，看見從未說出口的真相<br><br>場域已開啟，你準備好走進去了嗎</div>
   </div>
 
   <div class="info-strip">
-    <div class="info-item"><span class="info-dot"></span>2026年6月14日</div>
-    <div class="info-item"><span class="info-dot"></span>台南身心靈共享空間</div>
+    <div class="info-item"><span class="info-dot"></span>2026年6月14日　14:00 – 17:00</div>
+    <div class="info-item"><span class="info-dot"></span>際域台南身心靈共享空間</div>
+    <div class="info-item"><span class="info-dot"></span>台南市中西區民生路二段334號</div>
     <div class="info-item"><span class="info-dot"></span>限額4–6人</div>
+    <div class="info-item"><span class="info-dot"></span>帶領者：Li Na</div>
+    <div class="info-item"><span class="info-dot"></span>費用含茶水、場地費、材料費</div>
+  </div>
+
+  <div style="background:var(--surface2); border:0.5px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; font-size:13px; color:var(--text-muted); line-height:2; letter-spacing:0.03em;">
+    <p style="margin-bottom:1rem;">符印是折疊好的時空座標。當你走進它，你直接抵達自己需要看見的地方。</p>
+    <p style="margin-bottom:1rem;">這裡有兩張符印在等你。一張為這個群體開啟阿卡西場域，一張只屬於你。課程當天，Li Na 為每位在場者接收專屬符印，你親手著色連結。不需要任何人告訴你答案，你自己會知道。</p>
+    <p>帶走的，是一張你親手完成的能量門戶，和一支為你配對的香氣鑰匙。</p>
   </div>
 
   <div class="section">
@@ -212,16 +222,16 @@
     <div class="oil-box">
       <div class="oil-header">
         <div class="oil-dot"></div>
-        <div class="oil-box-title">精油盲抽</div>
+        <div class="oil-box-title">配對你的香氣鑰匙</div>
       </div>
-      <div class="oil-desc">不是你選它，是它選你。抽到的精油將在課堂上幫助你調頻，進入阿卡西場域。</div>
-      <button class="draw-btn" id="draw-btn" onclick="drawOil()">✦ 開始盲抽</button>
+      <div class="oil-desc">抽到的精油將在課堂上幫助你調頻，進入阿卡西場域。</div>
+      <button class="draw-btn" id="draw-btn" onclick="drawOil()">✦ 開始配對</button>
       <div class="oil-result" id="oil-result">
         <div class="oil-card">
           <div class="oil-emoji" id="oil-icon"></div>
           <div class="oil-name" id="oil-name"></div>
           <div class="oil-meaning" id="oil-meaning"></div>
-          <div class="oil-footnote">這支精油將在課堂上等待你</div>
+          <div class="oil-footnote">你的香氣鑰匙將在課堂上等待你</div>
         </div>
       </div>
     </div>
@@ -246,33 +256,41 @@
 </div>
 
 <div class="page success-page" id="success-page">
+
   <div class="success-header">
     <div class="success-glyph">✦</div>
     <div class="success-title">你已被召喚</div>
-    <div class="badge">待確認匯款中</div>
     <div class="success-sub" id="success-name-msg"></div>
   </div>
 
   <div class="success-oil-box">
-    <div class="success-oil-label">你的精油</div>
+    <div class="success-oil-label">你的香氣鑰匙</div>
     <div class="success-oil-name" id="success-oil"></div>
   </div>
 
   <div class="success-pay-box">
-    <div class="success-pay-title">匯款確認資訊</div>
-    <div class="success-pay-row"><span>銀行</span><span>700 中華郵政</span></div>
-    <div class="success-pay-row"><span>帳號</span><span>004157007152886</span></div>
+    <div class="success-pay-row"><span>票種</span><span id="s-plan"></span></div>
     <div class="success-pay-row"><span>金額</span><span id="s-amount"></span></div>
-    <div class="success-pay-row"><span>你的後五碼</span><span id="s-digits" style="letter-spacing:0.15em"></span></div>
   </div>
 
-  <div class="closing">
-    報名資訊已收到<br>
-    確認匯款後將發送通知<br><br>
-    <em>6月14日，帶著你的靈魂來</em>
+  <div style="text-align:center; font-size:13px; color:var(--text-muted); line-height:1.9; margin-bottom:1.5rem;">
+    若有任何問題，歡迎加入官方LINE詢問<br>
+    <a href="https://line.me/R/ti/p/@pzg5277e" target="_blank" style="color:var(--purple-dark); font-weight:500; text-decoration:none; border-bottom:0.5px solid var(--purple-mid);">@pzg5277e</a>
   </div>
+
+  <div style="background:#FFF8ED; border:0.5px solid #F0C070; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:12px; color:#7A5000; line-height:1.8; text-align:center;">
+    ⚠️ 請確實完成下方付款<br>收到款項後才會寄送確認信通知報名成功
+  </div>
+
+  <a id="ecpay-btn" href="#" target="_blank" style="display:block; width:100%; padding:16px; background:var(--purple-dark); color:white; border:none; border-radius:12px; font-size:15px; font-weight:500; text-align:center; text-decoration:none; letter-spacing:0.1em; font-family:'Noto Sans TC',sans-serif;">
+    前往綠界完成付款 →
+  </a>
+
+  <div style="text-align:center; margin-top:1.5rem; font-size:12px; color:var(--text-faint);">
+    <em style="color:var(--purple); font-style:normal;">6月14日，帶著你的靈魂來</em>
+  </div>
+
 </div>
-
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzv0CrpkQtzhVQvJ1vUGuU4yua4Ydj-rExj5f8mlIxKUI_i47AyWQr-OJNgq7P0aUIQtg/exec";
 const ECPAY_SOLO = "https://cart.cashier.ecpay.com.tw/qp/2fu9";
@@ -330,7 +348,7 @@ function drawOil() {
       document.getElementById('oil-icon').textContent = drawnOil.icon;
       document.getElementById('oil-name').textContent = drawnOil.name;
       document.getElementById('oil-meaning').textContent = drawnOil.meaning;
-      btn.textContent = '✓ 精油已確認';
+      btn.textContent = '✓ 香氣鑰匙已配對';
     }
   }, 110);
 }
@@ -345,7 +363,7 @@ function submitForm() {
 
   if (!name || !phone || !email) { alert('請填寫姓名、手機和Email'); return; }
   if (selectedTicket === 'duo' && (!companionName || !companionPhone)) { alert('請填寫同行者資訊'); return; }
-  if (!drawnOil) { alert('請先完成精油盲抽'); return; }
+  if (!drawnOil) { alert('請先完成配對你的香氣鑰匙'); return; }
 
   btn.disabled = true;
   btn.textContent = '正在連線星際航道...';
@@ -371,9 +389,7 @@ function submitForm() {
   .then(res => res.json())
   .then(data => {
     if (data.result === "success") {
-      // 跳轉綠界付款
-      const ecpayUrl = selectedTicket === 'solo' ? ECPAY_SOLO : ECPAY_DUO;
-      window.location.href = ecpayUrl;
+      showSuccess();
     } else {
       alert("發送失敗，請稍後再試。");
       btn.disabled = false;
@@ -382,10 +398,23 @@ function submitForm() {
   })
   .catch(err => {
     console.error(err);
-    // 即使GAS失敗，仍跳轉付款（避免卡住使用者）
-    const ecpayUrl = selectedTicket === 'solo' ? ECPAY_SOLO : ECPAY_DUO;
-    window.location.href = ecpayUrl;
+    // 即使GAS失敗，仍顯示成功頁面
+    showSuccess();
   });
+}
+
+function showSuccess() {
+  const name = document.getElementById('name').value.trim();
+  const ecpayUrl = selectedTicket === 'solo' ? ECPAY_SOLO : ECPAY_DUO;
+  document.getElementById('success-name-msg').textContent = name + '，你的位置已確認。';
+  document.getElementById('success-oil').textContent = drawnOil.icon + ' ' + drawnOil.name;
+  document.getElementById('s-amount').textContent = selectedTicket === 'solo' ? '2,888 元' : '5,332 元（兩人）';
+  const planEl = document.getElementById('s-plan');
+  if (planEl) planEl.textContent = selectedTicket === 'solo' ? '單人探索艙' : '雙人共振艙';
+  document.getElementById('ecpay-btn').href = ecpayUrl;
+  document.getElementById('form-page').style.display = 'none';
+  document.getElementById('success-page').classList.add('show');
+  window.scrollTo(0, 0);
 }
 </script>
 </body>
